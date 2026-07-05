@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Connexion — ShopCake</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="animations.css">
+</head>
+<body data-page="connexion">
+
+<header class="navbar">
+  <a href="index.html" class="navbar__logo">🎂 Shop<span>Cake</span></a>
+  <button class="navbar__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Accueil</a>
+    <a href="commande.html">Commander</a>
+    <a href="contact.html">Contact</a>
+    <a href="inscription.html">Inscription</a>
+  </nav>
+</header>
+
+<section class="section container">
+  <form class="form-card glass slide-up" id="connexionForm" novalidate>
+    <div class="text-center" style="margin-bottom:1.5rem;">
+      <p class="eyebrow">Content de vous revoir</p>
+      <h2>Se connecter</h2>
+    </div>
+
+    <div id="formAlert"></div>
+
+    <!--
+      NOTE POUR auth.js :
+      Le même formulaire sert à la connexion client ET à la connexion admin.
+      Identifiants admin : utilisateur "maman" / mot de passe "maman gateau".
+      Si l'identifiant saisi correspond à l'admin, auth.js doit créer une
+      session de type "admin" (localStorage: shopcake_session) et rediriger
+      vers admin.html au lieu de index.html.
+    -->
+
+    <div class="form-group">
+      <label class="form-label" for="identifiant">E-mail ou nom d'utilisateur</label>
+      <input class="form-control" type="text" id="identifiant" name="identifiant" required autocomplete="username" placeholder="vous@exemple.com">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="motdepasse">Mot de passe</label>
+      <input class="form-control" type="password" id="motdepasse" name="motdepasse" required autocomplete="current-password">
+    </div>
+
+    <div class="form-group field-check flex-between">
+      <span class="field-check"><input type="checkbox" id="rester"><label for="rester">Rester connecté(e)</label></span>
+    </div>
+
+    <button type="submit" class="btn btn-fraise btn-block">Se connecter</button>
+
+    <p class="text-center form-hint" style="margin-top:1rem;">
+      Pas encore de compte ? <a href="inscription.html" style="color:var(--color-accent-dark); font-weight:700;">S'inscrire</a>
+    </p>
+  </form>
+</section>
+
+<footer class="footer">
+  <p class="footer__copy">© 2026 ShopCake — Porto-Novo, Bénin.</p>
+</footer>
+
+<script src="theme.js"></script>
+<script src="souris.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>

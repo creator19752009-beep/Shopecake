@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tableau de bord — ShopCake Admin</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="animations.css">
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body data-page="admin">
+
+<!--
+  PROTECTION D'ACCÈS (gérée par admin.js) :
+  Au chargement, admin.js vérifie shopcake_session dans le localStorage.
+  Si le rôle n'est pas "admin" (identifiants maman / maman gateau),
+  la page redirige immédiatement vers connexion.html.
+-->
+
+<header class="navbar">
+  <a href="index.html" class="navbar__logo">🎂 Shop<span>Cake</span> <span class="tag" style="margin-left:.5rem;">Admin</span></a>
+  <div class="flex gap-3" style="align-items:center;">
+    <span id="adminName" class="form-hint" style="font-weight:700;"></span>
+    <button class="btn btn-outline" id="btnLogout">Se déconnecter</button>
+  </div>
+</header>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar glass">
+    <nav class="admin-nav">
+      <button class="admin-nav__link is-active" data-tab="commandes">📦 Commandes</button>
+      <button class="admin-nav__link" data-tab="produits">🎂 Produits</button>
+      <button class="admin-nav__link" data-tab="avis">⭐ Avis clients</button>
+      <button class="admin-nav__link" data-tab="boutique">📍 Ma boutique</button>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+
+    <!-- ONGLET COMMANDES -->
+    <section class="admin-tab is-active" id="tab-commandes">
+      <div class="flex-between" style="margin-bottom:1.2rem;">
+        <h2>Commandes reçues</h2>
+        <span class="tag" id="ordersCount">0 commande(s)</span>
+      </div>
+      <div id="ordersList" class="grid" style="gap:1rem;">
+        <!-- Injecté par admin.js depuis shopcake_orders -->
+        <p class="form-hint" id="noOrders">Aucune commande pour le moment.</p>
+      </div>
+    </section>
+
+    <!-- ONGLET PRODUITS -->
+    <section class="admin-tab" id="tab-produits">
+      <h2 style="margin-bottom:1.2rem;">Gérer les gâteaux</h2>
+
+      <form class="glass" id="produitForm" style="padding:1.6rem; border-radius:var(--radius-lg); margin-bottom:2rem; max-width:560px;">
+        <div id="produitAlert"></div>
+
+        <div class="form-group">
+          <label class="form-label" for="produitNom">Nom du gâteau</label>
+          <input class="form-control" type="text" id="produitNom" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="produitDesc">Description</label>
+          <textarea class="form-control" id="produitDesc"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="produitPrix">Prix (FCFA)</label>
+          <input class="form-control" type="number" id="produitPrix" min="0" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="produitImage">Photo du gâteau</label>
+          <input class="form-control" type="file" id="produitImage" accept="image/*">
+          <p class="form-hint">L'image est convertie et enregistrée directement (pas besoin d'hébergement externe).</p>
+          <img id="produitImagePreview" alt="Aperçu" style="display:none; margin-top:.8rem; max-width:160px; border-radius:var(--radius-md); box-shadow:var(--shadow-sm);">
+        </div>
+
+        <input type="hidden" id="produitId">
+        <button type="submit" class="btn btn-fraise" id="produitSubmitBtn">Ajouter le gâteau</button>
+      </form>
+
+      <div class="grid cake-grid" id="produitsGrid">
+        <!-- Liste des gâteaux existants, injectée par admin.js -->
+      </div>
+    </section>
+
+    <!-- ONGLET AVIS -->
+    <section class="admin-tab" id="tab-avis">
+      <h2 style="margin-bottom:1.2rem;">Avis clients</h2>
+      <div class="grid" id="avisAdminGrid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr));">
+        <!-- Injecté par admin.js -->
+      </div>
+    </section>
+
+    <!-- ONGLET BOUTIQUE / LOCALISATION -->
+    <section class="admin-tab" id="tab-boutique">
+      <h2 style="margin-bottom:.4rem;">Localisation de votre boutique</h2>
+      <p class="form-hint" style="margin-bottom:1rem;">Cliquez sur la carte pour placer le repère à l'emplacement exact de votre boutique à Porto-Novo. Cette position sera visible par vos clients sur les pages Commander et Contact.</p>
+
+      <div id="mapAdmin" style="height:360px; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md); margin-bottom:1rem;"></div>
+
+      <div class="form-group" style="max-width:520px;">
+        <label class="form-label" for="adresseBoutique">Adresse affichée aux clients</label>
+        <input class="form-control" type="text" id="adresseBoutique" placeholder="Ex : Rue 234, Quartier Houinmè, Porto-Novo">
+      </div>
+      <button class="btn btn-chocolat" id="btnSaveBoutique">Enregistrer l'emplacement</button>
+      <p class="form-hint" id="boutiqueSaved" style="margin-top:.6rem;"></p>
+    </section>
+
+  </main>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="theme.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

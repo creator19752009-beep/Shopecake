@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ShopCake — Pâtisserie artisanale</title>
+<meta name="description" content="ShopCake, la pâtisserie gourmande de Porto-Novo. Commandez vos gâteaux en ligne.">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="animations.css">
+</head>
+<body data-page="accueil">
+
+<header class="navbar">
+  <a href="index.html" class="navbar__logo">🎂 Shop<span>Cake</span></a>
+  <button class="navbar__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html" class="active">Accueil</a>
+    <a href="commande.html">Commander</a>
+    <a href="contact.html">Contact</a>
+    <a href="connexion.html" id="navAuthLink">Connexion</a>
+    <a href="admin.html" id="navAdminLink" style="display:none;">Tableau de bord</a>
+    <select id="themeSelect" class="form-control" style="width:auto;" aria-label="Choisir un thème">
+      <option value="chocolat">🍫 Chocolat</option>
+      <option value="vanille">🍦 Vanille</option>
+      <option value="fraise">🍓 Fraise</option>
+      <option value="rainbow">🌈 Rainbow Cake</option>
+      <option value="sombre">🌙 Nuit gourmande</option>
+    </select>
+  </nav>
+</header>
+
+<section class="hero fade-in">
+  <p class="eyebrow">Pâtisserie artisanale · Porto-Novo</p>
+  <h1 class="hero__title">Des gâteaux faits maison,<br>livrés avec amour 🍰</h1>
+  <p class="hero__subtitle">Chaque création ShopCake est préparée à la commande par nos soins. Choisissez votre gâteau, la date, et dites-nous si vous préférez être livré ou passer le récupérer.</p>
+  <div class="hero__actions">
+    <a href="commande.html" class="btn btn-fraise">Commander maintenant</a>
+    <a href="#creations" class="btn btn-outline">Voir nos créations</a>
+  </div>
+</section>
+
+<section class="section container" id="creations">
+  <div class="text-center" style="margin-bottom:2rem;">
+    <p class="eyebrow">Notre carte</p>
+    <h2>Nos créations du moment</h2>
+  </div>
+  <div class="grid cake-grid" id="cakeGrid">
+    <!-- Les cartes gâteaux sont injectées dynamiquement par js/app.js
+         depuis la liste enregistrée par l'admin (localStorage: shopcake_cakes).
+         Contenu de secours affiché si aucune donnée n'existe encore. -->
+    <article class="cake-card slide-up">
+      <div class="cake-card__image-wrap">
+        <span class="cake-card__badge">Populaire</span>
+        <img class="cake-card__image" src="images/gateau-chocolat.jpg" alt="Gâteau au chocolat" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600'">
+      </div>
+      <div class="cake-card__body">
+        <h3 class="cake-card__title">Fondant Chocolat</h3>
+        <p class="cake-card__desc">Génoise moelleuse, ganache chocolat noir 70%.</p>
+        <div class="cake-card__footer">
+          <span class="cake-card__price">8 500 FCFA</span>
+          <a href="commande.html" class="btn btn-chocolat">Commander</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="text-center" style="margin-bottom:2rem;">
+    <p class="eyebrow">Ils nous font confiance</p>
+    <h2>Avis de nos clients</h2>
+  </div>
+  <div class="grid" id="reviewGrid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr));">
+    <!-- Injecté par js/commentaire.js depuis shopcake_reviews -->
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer__links">
+    <a href="index.html">Accueil</a>
+    <a href="commande.html">Commander</a>
+    <a href="contact.html">Contact</a>
+    <a href="connexion.html">Connexion</a>
+  </div>
+  <p class="footer__copy">© 2026 ShopCake — Porto-Novo, Bénin. Fait avec 🍫 et beaucoup d'amour.</p>
+</footer>
+
+<script src="theme.js"></script>
+<script src="souris.js"></script>
+<script src="app.js"></script>
+<script src="commentaire.js"></script>
+</body>
+</html>

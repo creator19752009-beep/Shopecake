@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Contact — ShopCake</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="animations.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body data-page="contact">
+
+<header class="navbar">
+  <a href="index.html" class="navbar__logo">🎂 Shop<span>Cake</span></a>
+  <button class="navbar__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Accueil</a>
+    <a href="commande.html">Commander</a>
+    <a href="contact.html" class="active">Contact</a>
+    <a href="connexion.html" id="navAuthLink">Connexion</a>
+  </nav>
+</header>
+
+<section class="section container">
+  <div class="text-center" style="margin-bottom:2rem;">
+    <p class="eyebrow">Une question ?</p>
+    <h2>Contactez ShopCake</h2>
+  </div>
+
+  <div class="grid" style="grid-template-columns: 1.1fr 1fr; align-items:start;">
+    <form class="form-card glass slide-up" id="contactForm" novalidate>
+      <div id="formAlert"></div>
+
+      <div class="form-group">
+        <label class="form-label" for="nom">Nom</label>
+        <input class="form-control" type="text" id="nom" name="nom" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="email">E-mail</label>
+        <input class="form-control" type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="sujet">Sujet</label>
+        <input class="form-control" type="text" id="sujet" name="sujet" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="message">Message</label>
+        <textarea class="form-control" id="message" name="message" required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-chocolat btn-block">Envoyer le message</button>
+    </form>
+
+    <div class="glass slide-up" style="padding:1.6rem; border-radius:var(--radius-lg);">
+      <h3 style="margin-bottom:1rem;">📍 Notre boutique</h3>
+      <div id="mapContact" style="height:240px; border-radius:var(--radius-md); overflow:hidden; margin-bottom:1rem;"></div>
+      <p id="adresseBoutiqueContact" class="form-hint" style="margin-bottom:0.6rem;">Porto-Novo, Bénin</p>
+      <p class="form-hint">📞 +229 01 00 00 00 00</p>
+      <p class="form-hint">✉️ contact@shopcake.bj</p>
+      <p class="form-hint">🕐 Lun–Sam : 8h–19h</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p class="footer__copy">© 2026 ShopCake — Porto-Novo, Bénin.</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="theme.js"></script>
+<script src="souris.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

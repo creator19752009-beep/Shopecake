@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Commander — ShopCake</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="animations.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body data-page="commande">
+
+<header class="navbar">
+  <a href="index.html" class="navbar__logo">🎂 Shop<span>Cake</span></a>
+  <button class="navbar__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Accueil</a>
+    <a href="commande.html" class="active">Commander</a>
+    <a href="contact.html">Contact</a>
+    <a href="connexion.html" id="navAuthLink">Connexion</a>
+  </nav>
+</header>
+
+<section class="section container">
+  <div class="text-center" style="margin-bottom:2rem;">
+    <p class="eyebrow">Votre commande</p>
+    <h2>Composez votre gâteau</h2>
+  </div>
+
+  <form class="form-card glass slide-up" id="commandeForm" style="max-width:640px;" novalidate>
+    <div id="formAlert"></div>
+
+    <div class="form-group">
+      <label class="form-label" for="cakeSelect">Choisissez votre gâteau</label>
+      <select class="form-control" id="cakeSelect" name="cakeSelect" required>
+        <!-- Rempli dynamiquement par commande.js depuis shopcake_cakes -->
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="quantite">Quantité</label>
+      <input class="form-control" type="number" id="quantite" name="quantite" min="1" value="1" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="message">Message à écrire sur le gâteau (optionnel)</label>
+      <textarea class="form-control" id="message" name="message" placeholder="Ex : Joyeux Anniversaire Nadia !"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="dateSouhaitee">Date et heure souhaitées</label>
+      <input class="form-control" type="datetime-local" id="dateSouhaitee" name="dateSouhaitee" required>
+    </div>
+
+    <!-- Choix Livraison / Retrait -->
+    <div class="form-group">
+      <label class="form-label">Comment souhaitez-vous récupérer votre commande ?</label>
+      <div class="choice-group">
+        <label class="choice-card" id="choiceLivraisonLabel">
+          <input type="radio" name="mode" value="livraison" id="modeLivraison" checked>
+          <div class="choice-card__icon">🛵</div>
+          <div class="choice-card__label">Livraison</div>
+        </label>
+        <label class="choice-card" id="choiceRetraitLabel">
+          <input type="radio" name="mode" value="retrait" id="modeRetrait">
+          <div class="choice-card__icon">🏪</div>
+          <div class="choice-card__label">Retrait en boutique</div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Bloc affiché seulement si "Livraison" -->
+    <div class="form-group" id="blocLivraison">
+      <label class="form-label" for="adresse">Adresse de livraison</label>
+      <input class="form-control" type="text" id="adresse" name="adresse" placeholder="Quartier, rue, repère...">
+      <p class="form-hint">Livraison disponible à Porto-Novo et environs.</p>
+    </div>
+
+    <!-- Bloc affiché seulement si "Retrait en boutique" : carte de la boutique -->
+    <div class="form-group" id="blocRetrait" style="display:none;">
+      <label class="form-label">Notre boutique à Porto-Novo</label>
+      <div id="mapCommande" style="height:260px; border-radius:var(--radius-md); overflow:hidden; box-shadow:var(--shadow-sm);"></div>
+      <p class="form-hint" id="adresseBoutiqueTexte">Adresse renseignée par la boutique à venir.</p>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="nomClient">Votre nom</label>
+      <input class="form-control" type="text" id="nomClient" name="nomClient" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="telClient">Téléphone</label>
+      <input class="form-control" type="tel" id="telClient" name="telClient" required placeholder="+229 01 00 00 00 00">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="emailClient">E-mail</label>
+      <input class="form-control" type="email" id="emailClient" name="emailClient" required>
+    </div>
+
+    <button type="submit" class="btn btn-fraise btn-block">🎂 Valider ma commande</button>
+  </form>
+</section>
+
+<footer class="footer">
+  <p class="footer__copy">© 2026 ShopCake — Porto-Novo, Bénin.</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="theme.js"></script>
+<script src="souris.js"></script>
+<script src="commande.js"></script>
+</body>
+</html>

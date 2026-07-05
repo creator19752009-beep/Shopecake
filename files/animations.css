@@ -1,0 +1,275 @@
+/* ============================================================
+   SHOPCAKE — animations.css (Partie 3/4)
+   Animations gourmandes avancées + styles du curseur
+   personnalisé (piloté en JS par souris.js).
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. COUCHE AMBIANTE — biscuits qui tombent, cupcakes flottants
+   Conteneur injecté par app.js : <div id="ambientLayer" class="ambient-layer">
+   Chaque élément est ajouté dynamiquement en JS avec une position
+   et une durée aléatoires (left, animation-duration en inline style).
+   ------------------------------------------------------------ */
+.ambient-layer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.falling-cookie,
+.floating-cupcake {
+  position: absolute;
+  font-size: 1.6rem;
+  opacity: 0.55;
+  will-change: transform;
+  filter: drop-shadow(0 4px 6px rgba(60, 36, 21, 0.15));
+}
+
+.falling-cookie {
+  top: -60px;
+  animation-name: cookieFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes cookieFall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+  8%   { opacity: 0.55; }
+  92%  { opacity: 0.55; }
+  100% { transform: translateY(110vh) rotate(280deg); opacity: 0; }
+}
+
+.floating-cupcake {
+  bottom: -60px;
+  animation-name: cupcakeFloat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes cupcakeFloat {
+  0%   { transform: translateY(0) translateX(0) rotate(-4deg); opacity: 0; }
+  10%  { opacity: 0.6; }
+  50%  { transform: translateY(-52vh) translateX(18px) rotate(4deg); }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-108vh) translateX(-10px) rotate(-4deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-layer { display: none; }
+}
+
+/* Sur mobile, on allège la couche ambiante pour la performance */
+@media (max-width: 680px) {
+  .falling-cookie, .floating-cupcake { font-size: 1.2rem; opacity: 0.35; }
+}
+
+/* ------------------------------------------------------------
+   2. BOUTON FRAISE — effet "jus de fraise" au clic
+   La classe .is-clicked est ajoutée brièvement en JS au clic.
+   ------------------------------------------------------------ */
+.btn-fraise { position: relative; overflow: hidden; }
+
+.btn-fraise::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.btn-fraise.is-clicked::after {
+  animation: splash 0.55s var(--ease);
+}
+
+@keyframes splash {
+  0%   { width: 0; height: 0; opacity: 0.6; }
+  100% { width: 240px; height: 240px; opacity: 0; }
+}
+
+/* ------------------------------------------------------------
+   3. ANIMATION DE GÂTEAU — confirmation de commande
+   Overlay plein écran affiché par commande.js après validation.
+   Structure attendue :
+   <div class="cake-success" id="cakeSuccess">
+     <div class="cake-success__emoji">🎂</div>
+     <p class="cake-success__text">Commande envoyée !</p>
+   </div>
+   ------------------------------------------------------------ */
+.cake-success {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  background: rgba(28, 20, 16, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-med) var(--ease);
+}
+
+.cake-success.is-visible { opacity: 1; pointer-events: auto; }
+
+.cake-success__emoji {
+  font-size: 5rem;
+  animation: cakePop 0.7s var(--ease);
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.35));
+}
+
+@keyframes cakePop {
+  0%   { transform: scale(0) rotate(-20deg); }
+  60%  { transform: scale(1.15) rotate(6deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.cake-success__text {
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------
+   4. TOASTS / NOTIFICATIONS
+   ------------------------------------------------------------ */
+.toast {
+  position: fixed;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  z-index: 998;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+  font-weight: 700;
+  font-family: var(--font-ui);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform var(--t-med) var(--ease), opacity var(--t-med) var(--ease);
+}
+
+.toast.is-visible { transform: translateY(0); opacity: 1; }
+
+@media (max-width: 680px) {
+  .toast { left: var(--space-3); right: var(--space-3); bottom: var(--space-3); }
+}
+
+/* ------------------------------------------------------------
+   5. CURSEUR PERSONNALISÉ (piloté par souris.js)
+   Deux éléments injectés une fois dans le <body> :
+     <div class="shopcake-cursor" id="cursorMain"></div>
+     <div class="shopcake-cursor shopcake-cursor--ring" id="cursorRing"></div>
+   souris.js les déplace via transform: translate3d() sur mousemove.
+   ------------------------------------------------------------ */
+body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button,
+body.has-custom-cursor input, body.has-custom-cursor textarea, body.has-custom-cursor select {
+  cursor: none;
+}
+
+.shopcake-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0);
+  opacity: 0;
+  transition: opacity var(--t-fast) var(--ease),
+              width var(--t-fast) var(--ease),
+              height var(--t-fast) var(--ease),
+              background var(--t-fast) var(--ease),
+              border-color var(--t-fast) var(--ease);
+}
+
+body.has-custom-cursor .shopcake-cursor { opacity: 1; }
+
+/* --- Style "Gâteau" (par défaut) : petit point + halo gourmand --- */
+.shopcake-cursor--point {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--cursor-color, var(--color-accent));
+}
+
+.shopcake-cursor--ring {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--cursor-color, var(--color-accent));
+  transition: width var(--t-fast) var(--ease), height var(--t-fast) var(--ease),
+              opacity var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+
+/* Grossit au survol des éléments cliquables */
+body.has-custom-cursor.cursor-hover .shopcake-cursor--ring {
+  width: 50px; height: 50px;
+  border-color: var(--color-accent-dark);
+}
+body.has-custom-cursor.cursor-hover .shopcake-cursor--point {
+  transform: translate3d(-50%, -50%, 0) scale(1.4);
+}
+
+/* --- Style "Emoji gourmand" (curseur = icône gâteau/fraise/etc.) --- */
+.shopcake-cursor--emoji {
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.25));
+}
+
+/* --- Style "Bulle transparente" : le plus proche d'un curseur normal --- */
+.shopcake-cursor--bulle {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+body.has-custom-cursor.cursor-hover .shopcake-cursor--bulle {
+  width: 30px; height: 30px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* --- Mode "curseur normal" : on désactive totalement le curseur custom --- */
+body.cursor-normal, body.cursor-normal * { cursor: auto; }
+body.cursor-normal .shopcake-cursor { display: none; }
+
+/* ------------------------------------------------------------
+   6. ADAPTATION MOBILE / TACTILE DU CURSEUR
+   Sur écran tactile, le curseur personnalisé reste invisible
+   et n'apparaît brièvement qu'au point de contact (souris.js
+   écoute touchstart/touchmove et ajoute .cursor-touch-active).
+   ------------------------------------------------------------ */
+@media (hover: none) and (pointer: coarse) {
+  body.has-custom-cursor, body.has-custom-cursor * { cursor: auto; }
+
+  .shopcake-cursor { opacity: 0 !important; }
+
+  body.cursor-touch-active .shopcake-cursor--bulle,
+  body.cursor-touch-active .shopcake-cursor--point,
+  body.cursor-touch-active .shopcake-cursor--emoji {
+    opacity: 0.85 !important;
+    animation: touchPulse 0.5s var(--ease);
+  }
+
+  /* Sur tactile, la bulle transparente est le rendu recommandé */
+  body.cursor-touch-active .shopcake-cursor--ring { opacity: 0 !important; }
+}
+
+@keyframes touchPulse {
+  0%   { transform: translate3d(-50%, -50%, 0) scale(0.4); opacity: 0; }
+  60%  { transform: translate3d(-50%, -50%, 0) scale(1.15); }
+  100% { transform: translate3d(-50%, -50%, 0) scale(1); opacity: 0.85; }
+}
+
+/* ============================================================
+   FIN animations.css — Partie 3/4
+   ============================================================ */

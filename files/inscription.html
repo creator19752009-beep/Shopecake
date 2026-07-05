@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Inscription — ShopCake</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="animations.css">
+</head>
+<body data-page="inscription">
+
+<header class="navbar">
+  <a href="index.html" class="navbar__logo">🎂 Shop<span>Cake</span></a>
+  <button class="navbar__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Accueil</a>
+    <a href="commande.html">Commander</a>
+    <a href="contact.html">Contact</a>
+    <a href="connexion.html">Connexion</a>
+  </nav>
+</header>
+
+<section class="section container">
+  <form class="form-card glass slide-up" id="inscriptionForm" novalidate>
+    <div class="text-center" style="margin-bottom:1.5rem;">
+      <p class="eyebrow">Rejoignez-nous</p>
+      <h2>Créer un compte</h2>
+    </div>
+
+    <div id="formAlert"></div>
+
+    <div class="form-group">
+      <label class="form-label" for="nom">Nom complet</label>
+      <input class="form-control" type="text" id="nom" name="nom" required autocomplete="name" placeholder="Ex : Aïcha Dossou">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="email">Adresse e-mail</label>
+      <input class="form-control" type="email" id="email" name="email" required autocomplete="email" placeholder="vous@exemple.com">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="telephone">Téléphone</label>
+      <input class="form-control" type="tel" id="telephone" name="telephone" required autocomplete="tel" placeholder="+229 01 00 00 00 00">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="motdepasse">Mot de passe</label>
+      <input class="form-control" type="password" id="motdepasse" name="motdepasse" required minlength="6" autocomplete="new-password">
+      <p class="form-hint">6 caractères minimum.</p>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="motdepasse2">Confirmer le mot de passe</label>
+      <input class="form-control" type="password" id="motdepasse2" name="motdepasse2" required minlength="6" autocomplete="new-password">
+    </div>
+
+    <div class="form-group field-check">
+      <input type="checkbox" id="conditions" required>
+      <label for="conditions">J'accepte les conditions d'utilisation de ShopCake.</label>
+    </div>
+
+    <button type="submit" class="btn btn-fraise btn-block">Créer mon compte</button>
+
+    <p class="text-center form-hint" style="margin-top:1rem;">
+      Déjà inscrit(e) ? <a href="connexion.html" style="color:var(--color-accent-dark); font-weight:700;">Se connecter</a>
+    </p>
+  </form>
+</section>
+
+<footer class="footer">
+  <p class="footer__copy">© 2026 ShopCake — Porto-Novo, Bénin.</p>
+</footer>
+
+<script src="theme.js"></script>
+<script src="souris.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>
